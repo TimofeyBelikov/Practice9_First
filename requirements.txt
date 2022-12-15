@@ -1,1 +1,2 @@
 djangorestframework
+psycopg2==2.7.4
