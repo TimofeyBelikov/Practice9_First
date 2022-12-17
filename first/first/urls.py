@@ -20,6 +20,6 @@ from service_first.views import JobAPIFull, StatusAPIFull
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('job/', JobAPIFull.as_view({'get': 'list'})),
-    path('status/', StatusAPIFull.as_view({'get': 'list'}))
+    path('job/', JobAPIFull.as_view({'get': 'list', 'post': 'create'})),
+    path('status/', StatusAPIFull.as_view({'get': 'list', 'post': 'create'}))
 ]
