@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from service_first.views import JobAPIFull, StatusAPIFull
+from service_first.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('job/', JobAPIFull.as_view({'get': 'list', 'post': 'create'})),
-    path('status/', StatusAPIFull.as_view({'get': 'list', 'post': 'create'}))
+    path('status/', StatusAPIFull.as_view({'get': 'list', 'post': 'create'})),
+    path('__health/', HealthCheckView.as_view())
 ]
