@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import django_opentracing
 from pathlib import Path
+import opentracing
+from jaeger_client import Config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +28,7 @@ SECRET_KEY = 'django-insecure-0o3jf3@%_-^(i@-_o7m@qb%@7nn36d75@#(-*f=@7ts-otbpvq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['first-service','krakend','localhost','127.0.0.1','second-service']
+ALLOWED_HOSTS = ['first-service','krakend','localhost','127.0.0.1','second-service','*']
 
 
 # Application definition
@@ -38,10 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'service_first'
+    'service_first',
+    'django_prometheus',
 ]
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_opentracing.OpenTracingMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
 ROOT_URLCONF = 'first.urls'
@@ -127,3 +134,25 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import django_opentracing
+OPENTRACING_TRACE_ALL = True
+
+config = Config(
+    config={ # usually read from some yaml config
+        'sampler': {
+            'type': 'const',
+            'param': 1,
+        },
+        'local_agent': {
+            'reporting_host': 'jaeger',
+            'reporting_port': '6831'
+        },
+        'logging': True,
+    },
+    service_name='first-service',
+    validate=False,
+)
+# this call also sets opentracing.tracer
+tracer = config.initialize_tracer()
+OPENTRACING_TRACING = django_opentracing.DjangoTracing(tracer)

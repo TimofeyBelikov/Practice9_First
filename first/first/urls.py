@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include
 
 from service_first.views import *
 
@@ -22,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('job/', JobAPIFull.as_view({'get': 'list', 'post': 'create'})),
     path('status/', StatusAPIFull.as_view({'get': 'list', 'post': 'create'})),
-    path('__health/', HealthCheckView.as_view())
+    path('__health/', HealthCheckView.as_view()),
+    path('', include('django_prometheus.urls')),
 ]
