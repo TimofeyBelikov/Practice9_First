@@ -19,4 +19,5 @@ jobs:
       - name: Push tag to Docker Hub
         run: docker push timofeybelikov/ma-status-service:latest
         
+        
       
