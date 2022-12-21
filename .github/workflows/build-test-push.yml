@@ -19,9 +19,15 @@ jobs:
         run: docker run --name db-service -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --network=microarch -d postgres  
       # Run containter
       - name: Run container Status-service
-        run: docker run -p 8000:80 -d --network=microarch timofeybelikov/ma-status-service:latest
+        run: docker run -p 8000:80 -d --network=microarch --name service1 timofeybelikov/ma-status-service:latest
       
-    
+      # Inspect containers
+      - name: Inspect PG
+        run: docker container inspect db-service
+      # Inspect containers
+      - name: Inspect Service1
+        run: docker container inspect service1
+        
       # Test Container
       - name: Set up Python
         uses: actions/setup-python@v4
