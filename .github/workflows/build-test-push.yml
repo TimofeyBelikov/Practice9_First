@@ -11,11 +11,16 @@ jobs:
       - name: Build Docker Image
         run: docker build . --file Dockerfile -t timofeybelikov/ma-status-service:latest
         
-      # Run containter
-      - name: Run container Postgres and Status-service
-        run: docker run -p 8000:80 -d timofeybelikov/ma-status-service:latest
+      - name: Create network
+        run: docker network create microarch
+        
+        
       - name: Run Postgres Container
-        run: docker run --name db-service -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres
+        run: docker run --name db-service -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --network=microarch -d postgres  
+      # Run containter
+      - name: Run container Status-service
+        run: docker run -p 8000:80 -d --network=microarch timofeybelikov/ma-status-service:latest
+      
     
       # Test Container
       - name: Set up Python
