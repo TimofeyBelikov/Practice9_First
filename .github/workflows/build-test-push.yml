@@ -16,11 +16,16 @@ jobs:
         
         
       - name: Run Postgres Container
-        run: docker run --name db-service -p 5432:5432 --net-alias db-service -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --network=microarch postgres  
+        run: docker run --name db-service -p 5432:5432 --net-alias db-service -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --network=microarch -d postgres  
       # Run containter
       - name: Run container Status-service
-        run: docker run -p 8000:80 --net-alias first-service --network=microarch --name first-service timofeybelikov/ma-status-service:latest
+        run: docker run -p 8000:80 --net-alias first-service --network=microarch --name first-service -d timofeybelikov/ma-status-service:latest
       
+      
+      - name: Sleep for 30 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '30s'
       
       # Inspect containers
       - name: Inspect PG
