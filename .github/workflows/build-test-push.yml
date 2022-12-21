@@ -18,14 +18,20 @@ jobs:
       - name: Run Postgres Container
         run: docker run --name db-service -p 5432:5432 --restart always --net-alias db-service -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --network=microarch -d postgres  
       # Run containter
-      - name: Run container Status-service
-        run: docker run -p 8000:80 --restart always --net-alias first-service --network=microarch --name first-service -d timofeybelikov/ma-status-service:latest
-      
-      
       - name: Sleep for 30 seconds
         uses: jakejarvis/wait-action@master
         with:
           time: '30s'
+          
+      - name: Run container Status-service
+        run: docker run -p 8000:80 --restart always --net-alias first-service --network=microarch --name first-service -d timofeybelikov/ma-status-service:latest
+      
+      
+      # Ping containers
+      - name: Ping django
+        run: ping localhost:8000
+      - name: Ping PG
+        run: ping localhost:5432
       
       # Inspect containers
       - name: Inspect PG
