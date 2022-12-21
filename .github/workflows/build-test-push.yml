@@ -23,7 +23,7 @@ jobs:
           time: '10s'
           
       - name: Run container Status-service
-        run: docker run -p 8000:80 --restart always --net-alias first-service --network=microarch --name first-service timofeybelikov/ma-status-service:latest
+        run: docker run -p 8000:80 --restart always --net-alias first-service --network=microarch -e POSTGRES_NAME=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --name first-service timofeybelikov/ma-status-service:latest
       
       # Inspect containers
       - name: Inspect PG
