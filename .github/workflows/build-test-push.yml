@@ -29,9 +29,9 @@ jobs:
       
       # Ping containers
       - name: Ping django
-        run: ping localhost:8000
+        run: ping http://localhost:8000
       - name: Ping PG
-        run: ping localhost:5432
+        run: ping http://localhost:5432
       
       # Inspect containers
       - name: Inspect PG
