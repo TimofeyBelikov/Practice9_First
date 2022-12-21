@@ -12,7 +12,7 @@ jobs:
         run: docker build . --file Dockerfile -t timofeybelikov/ma-status-service:latest
         
       - name: Create network
-        run: docker network create microarch
+        run: docker network create microarch --driver=host
         
         
       - name: Run Postgres Container
