@@ -16,7 +16,7 @@ jobs:
         
         
       - name: Run Postgres Container
-        run: docker run --name db-service -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --network=microarch -d postgres  
+        run: docker run --name db-service -p 5432:5432 -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --network=microarch -d postgres  
       # Run containter
       - name: Run container Status-service
         run: docker run -p 8000:80 -d --network=microarch --name service1 timofeybelikov/ma-status-service:latest
