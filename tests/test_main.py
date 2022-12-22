@@ -1,14 +1,14 @@
 import requests
 
 api_url = 'http://localhost:8000'
-
+formatter = '/?format=json'
 def test_healthcheck():
     response = requests.get(f'{api_url}/__health')
     assert response.status_code == 200
 def test_emptyTablecheck():
-    response = requests.get(f'{api_url}/status')
+    response = requests.get(f'{api_url}/status{formatter}')
     assert response.status_code == 200
-    assert len((response.json())) == 1
+    assert len((response.json())) == 0
 def test_create():
     description = "test_create description"
     body_text = "test_create body"
