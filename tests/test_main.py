@@ -37,6 +37,6 @@ def test_create_job():
     assert response.json().get("subJobs") == subJobs
 
 def test_metrics():
-    response = requests.get(f'{api_url}/metriscs')
+    response = requests.get(f'{api_url}/metrics')
     assert response.status_code == 200
     assert len((response.json())) != 0
