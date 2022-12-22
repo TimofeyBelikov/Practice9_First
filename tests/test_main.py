@@ -14,8 +14,8 @@ def test_create():
     body_text = "test_create body"
     code = 1
     body = {"description": description, "body": body_text, "code": code}
-    response = requests.post(f'{api_url}/status', json=body)
-    assert response.status_code == 200
+    response = requests.post(f'{api_url}/status{formatter}', json=body)
+    assert response.status_code == 201 # 201 - Created
     assert response.json().get('description') == description
     assert response.json().get('body') == body_text
     assert response.json().get('code') == code
