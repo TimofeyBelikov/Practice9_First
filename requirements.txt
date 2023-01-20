@@ -20,3 +20,4 @@ thrift==0.13.0
 tornado==5.1.1
 urllib3==1.25.8
 wrapt==1.11.2
+django-graylog==0.7.0
