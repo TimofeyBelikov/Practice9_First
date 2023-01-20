@@ -160,3 +160,27 @@ config = Config(
 # this call also sets opentracing.tracer
 tracer = config.initialize_tracer()
 OPENTRACING_TRACING = django_opentracing.DjangoTracing(tracer)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'gelf': {
+            'class': 'graypy.GELFUDPHandler',
+            'host': os.environ.get('GRAYLOG_UDP_ENDPOINT_IP', '0.0.0.0'),
+            'port': int(os.environ.get('GRAYLOG_UDP_ENDPOINT_PORT', 12201)),
+        },
+    },
+    'loggers': {
+        'custom_gy_logger': {
+            'handlers': ['gelf'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
+    }
+}
+
+import logging
+logger = logging.getLogger('custom_gy_logger')
+logger.debug('This is funny error')
+
