@@ -21,3 +21,7 @@ tornado==5.1.1
 urllib3==1.25.8
 wrapt==1.11.2
 django-graylog[all]
+django-environ==0.4.5
+django-graylog==0.6.0
+graypy==2.1.0
+
