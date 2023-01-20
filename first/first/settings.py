@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django_graylog.GraylogMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -57,6 +58,9 @@ MIDDLEWARE = [
     'django_opentracing.OpenTracingMiddleware',
     'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
+
+
+GRAYLOG_ENDPOINT = "udp://graylog:12201"
 
 ROOT_URLCONF = 'first.urls'
 
