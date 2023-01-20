@@ -60,7 +60,8 @@ MIDDLEWARE = [
 ]
 
 
-GRAYLOG_ENDPOINT =  os.environ.get('GRAYLOG_ENDPOINT', 'graylog')
+
+
 
 ROOT_URLCONF = 'first.urls'
 
@@ -161,6 +162,8 @@ config = Config(
 tracer = config.initialize_tracer()
 OPENTRACING_TRACING = django_opentracing.DjangoTracing(tracer)
 
+
+GRAYLOG_ENDPOINT = os.environ.get('GRAYLOG_HTTP_ENDPOINT')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
