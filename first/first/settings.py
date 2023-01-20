@@ -60,7 +60,7 @@ MIDDLEWARE = [
 ]
 
 
-GRAYLOG_ENDPOINT = "udp://graylog:12201"
+GRAYLOG_ENDPOINT =  os.environ.get('GRAYLOG_ENDPOINT', 'graylog')
 
 ROOT_URLCONF = 'first.urls'
 
