@@ -20,4 +20,5 @@ class StatusAPIFull(ModelViewSet):
 
 class HealthCheckView(View):
     def get(self, request, *args, **kwargs):
+        request.graylog.info("health check {request}", request=request)
         return HttpResponse("work!")
